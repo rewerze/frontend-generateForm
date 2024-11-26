@@ -1,0 +1,44 @@
+body {
+    background: linear-gradient(180deg, rgb(2, 1, 13) 0%, rgb(0, 0, 0) 100%);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 80vh;
+    overflow: hidden;
+}
+
+h1 {
+    text-align: center;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 4rem;
+}
+
+.container {
+    margin-top: 15rem;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    width: 25%;
+    margin: auto;
+    padding: 5rem;
+    align-items: center;
+
+    background-color: rgb(215, 122, 0);
+    border: 2px dashed rgb(0, 0, 0);
+}
+
+input {
+    background-color: rgb(48, 52, 54);
+    color: white;
+    border: 2px solid black;
+    width: 70%;
+    padding: 5px;
+    font-family: monospace;
+    font-weight: 800;
+    font-size: large;
+}

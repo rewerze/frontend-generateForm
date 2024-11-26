@@ -1,20 +1,31 @@
 import { renderField } from "./field.js";
 
 let app = document.getElementById('app');
-
 let globalState = {}
 
-let field1 = renderField( {
+
+let textField = renderField( {
   state: globalState,
-  id: "text1",
+  id: "text-input",
   type: "text",  
+  placeholder: "text",
 });
 
-let field2 = renderField( {
-    state: globalState,
-    id: "text2",
-    type: "text",  
-  });
+let numberField = renderField ({
+  state: globalState,
+  id: "number-input",
+  type: "number",
+  placeholder: "number",
+});
 
-app.appendChild(field1);
-app.appendChild(field2);
+let emailField = renderField ({
+  state: globalState,
+  id: "email-input",
+  type: "email",
+  placeholder: "email",
+});
+
+//Input tag hozzáadása
+app.appendChild(textField);
+app.appendChild(numberField);
+app.appendChild(emailField);

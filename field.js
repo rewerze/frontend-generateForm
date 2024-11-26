@@ -3,6 +3,7 @@ export function renderField(config) {
 
     field.id = config.id;
     field.type = config.type;
+    field.placeholder = config.placeholder;
 
     field.addEventListener('input', () => {
         config.state[config.id] = field.value;
