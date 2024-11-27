@@ -10,6 +10,7 @@ let textField = renderField( {
   type: "text",  
   placeholder: "text",
 });
+app.appendChild(textField);
 
 let numberField = renderField ({
   state: globalState,
@@ -17,6 +18,7 @@ let numberField = renderField ({
   type: "number",
   placeholder: "number",
 });
+app.appendChild(numberField);
 
 let emailField = renderField ({
   state: globalState,
@@ -24,8 +26,11 @@ let emailField = renderField ({
   type: "email",
   placeholder: "email",
 });
-
-//Input tag hozzáadása
-app.appendChild(textField);
-app.appendChild(numberField);
 app.appendChild(emailField);
+
+let defaultField = renderField({
+  state: globalState,
+  id: "default",
+  type: "default",
+})
+app.appendChild(defaultField);
