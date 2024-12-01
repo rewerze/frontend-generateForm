@@ -1,22 +1,31 @@
 body {
-    background-color: rgb(18, 16, 34);
+    background-color: #222831;
 }
 
 h1 {
     text-align: center;
-    color: white;
+    color: #EEEEEE;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 4rem;
+    text-shadow: 5px 2px rgb(0, 0, 0);
 }
 
 .container {
     margin-top: 10rem;
 }
 
+#email-input-user {
+    width: 21.5rem;
+}
+
+#email-input-domain {
+    width: 100%;
+}
+
 .email {
     display: flex;
+    flex-direction: row;
     justify-content: center;
-    width: 103%;
 }
 
 .email span {
@@ -24,8 +33,26 @@ h1 {
     margin-right: 2px;
 
     font-family: monospace;
-    font-weight:bolder;
+    font-weight: bolder;
     font-size: xx-large;
+}
+
+
+.topOn {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.topOff {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.topOff label {
+    margin-top: 7px;
+    width: 25%;
 }
 
 #app {
@@ -33,22 +60,34 @@ h1 {
     flex-direction: column;
     gap: 5px;
 
-    width: 25%;
+    width: 30%;
     margin: auto;
     padding: 5rem;
     align-items: center;
 
-    background-color: rgb(215, 122, 0);
+    background-color: #76ABAE;
     border: 2px dashed rgb(0, 0, 0);
+    box-shadow: 10px 10px 15px 0px rgba(0, 0, 0, 0.3);
 }
 
 input {
-    background-color: rgb(48, 52, 54);
-    color: white;
+    background-color: #31363F;
+    color: #EEEEEE;
     border: 2px solid black;
+
+
     width: 100%;
     padding: 5px;
+
+
     font-family: monospace;
     font-weight: 800;
     font-size: large;
+}
+
+
+label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    color: rgb(81, 76, 67);
 }

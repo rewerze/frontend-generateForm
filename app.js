@@ -7,30 +7,31 @@ let globalState = {}
 let textField = renderField( {
   state: globalState,
   id: "text-input",
-  type: "text",  
-  placeholder: "text",
+  type: "text",
+  label: "Username:",
+  labelOnTop: false,
+  placeholder: "admin",
 });
-app.appendChild(textField);
 
 let numberField = renderField ({
   state: globalState,
   id: "number-input",
   type: "number",
-  placeholder: "number",
+  label: "Phone number:",
+  labelOnTop: true,
+  placeholder: "+36 01 234 5678",
 });
-app.appendChild(numberField);
 
 let emailField = renderField ({
   state: globalState,
   id: "email-input",
   type: "email",
-  placeholder: "email",
+  label: "Email:",
+  labelOnTop: false,
+  placeholder: "myemail",
 });
-app.appendChild(emailField);
 
-let defaultField = renderField({
-  state: globalState,
-  id: "default",
-  type: "default",
-})
-app.appendChild(defaultField);
+app.appendChild(emailField);
+app.appendChild(textField);
+app.appendChild(numberField);
+app.appendChild(fasz);
