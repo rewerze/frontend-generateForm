@@ -52,7 +52,11 @@ h1 {
 
 .topOff label {
     margin-top: 7px;
-    width: 25%;
+    width: 30%;
+}
+
+.topOff, .topOn {
+    margin-bottom: 3px;
 }
 
 #app {
@@ -66,8 +70,8 @@ h1 {
     align-items: center;
 
     background-color: #76ABAE;
-    border: 2px dashed rgb(0, 0, 0);
-    box-shadow: 10px 10px 15px 0px rgba(0, 0, 0, 0.3);
+    border: 3px solid black;
+    box-shadow: 3px 3px 2px 0 black;
 }
 
 input {

@@ -1,37 +1,31 @@
-import { renderField } from "./field.js";
+// import { renderField } from "./field.js";
+import { renderForm } from "./field.js";
 
 let app = document.getElementById('app');
-let globalState = {}
+let globalState = {};
 
-
-let textField = renderField( {
-  state: globalState,
-  id: "text-input",
-  type: "text",
-  label: "Username:",
+let form = renderForm ({
+  showState: true,
   labelOnTop: false,
-  placeholder: "admin",
+  fields: [
+    {
+      id: "text-input",
+      type: "text",
+      label: "Username:",
+      placeholder: "admin",
+    },
+    {
+      id: "number-input",
+      type: "number",
+      label: "Phone number:",
+      placeholder: "+36 01 234 5678",
+    },
+    {
+      id: "email-input",
+      type: "email",
+      label: "Email:",
+      placeholder: "myemail",
+    },
+  ]
 });
-
-let numberField = renderField ({
-  state: globalState,
-  id: "number-input",
-  type: "number",
-  label: "Phone number:",
-  labelOnTop: true,
-  placeholder: "+36 01 234 5678",
-});
-
-let emailField = renderField ({
-  state: globalState,
-  id: "email-input",
-  type: "email",
-  label: "Email:",
-  labelOnTop: false,
-  placeholder: "myemail",
-});
-
-app.appendChild(emailField);
-app.appendChild(textField);
-app.appendChild(numberField);
-app.appendChild(fasz);
+app.appendChild(form);

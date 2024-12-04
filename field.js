@@ -1,79 +1,91 @@
-//RENDER INPUT FROM APP
+var formField;
+var stateView;
+
+export function renderForm (CONFIG) {
+    let formState = {};
+    formField = document.createElement('form');
+    stateView = document.createElement('p');
+    formField.appendChild(stateView);
+    for (let i = 0; i < CONFIG.fields.length; i++ ) {
+
+        console.log("rendering " + (i+1) + ". field: " + CONFIG.fields[i].type)
+        formField.appendChild(renderField(CONFIG.fields[i], CONFIG.labelOnTop, stateView, formState));
+    }
+    return formField;
+}
+
 var field;
-
-export function renderField(config) {
-    console.log("RENDER INPUT");
-
-    switch (config.type) {
-        case "text":    field = renderText(config);     break;
-        case "number":  field = renderNumber(config);   break;
-        case "email":   field = renderEmail(config);    break;
-        default:        field = renderDefault(config);  break;
+function renderField(FIELD_PROPERTIES, LABEL, state, formState) {
+    switch (FIELD_PROPERTIES.type) {
+        case "text":    field = renderText(FIELD_PROPERTIES, LABEL, state, formState);     break;
+        case "number":  field = renderNumber(FIELD_PROPERTIES, LABEL, state, formState);   break;
+        case "email":   field = renderEmail(FIELD_PROPERTIES, LABEL, state, formState);    break;
+        default:        field = renderDefault(FIELD_PROPERTIES, LABEL, state, formState);  break;
     }
     return field;
 }
 
 
 // Render text
-function renderText(values) {
+function renderText(FIELD_VALUES, LABEL, state, formState) {
     field = document.createElement('div');
-    if (values.labelOnTop) {
+    if (LABEL) {
         field.className = "topOn";
         var label = document.createElement("label");
-        label.innerText = values.label;
+        label.innerText = FIELD_VALUES.label;
         field.appendChild(label);
     }
     else {
         field.className = "topOff";
         var label = document.createElement("label");
-        label.innerText = values.label;
+        label.innerText = FIELD_VALUES.label;
         field.appendChild(label);
     }
     var input = document.createElement("input");
-    input.id = values.id;
-    input.type = values.type;
-    input.placeholder = values.placeholder;
+    input.id = FIELD_VALUES.id;
+    input.type = FIELD_VALUES.type;
+    input.placeholder = FIELD_VALUES.placeholder;
     field.appendChild(input);
     
-    Spy(input, values);
+    Spy(input, FIELD_VALUES, state, formState);
     return field;
 }
 
 
 // Render number
-function renderNumber(values) {    
+function renderNumber(FIELD_VALUES, LABEL, state, formState) {    
     field = document.createElement('div');
-    if (values.labelOnTop) {
+    if (LABEL) {
         field.className = "topOn";
         var label = document.createElement("label");
-        label.innerText = values.label;
+        label.innerText = FIELD_VALUES.label;
         field.appendChild(label);
     }
     else {
         field.className = "topOff";
         var label = document.createElement("label");
-        label.innerText = values.label;
+        label.innerText = FIELD_VALUES.label;
         field.appendChild(label);
     }
     var input = document.createElement("input");
-    input.id = values.id;
-    input.type = values.type;
-    input.placeholder = values.placeholder;
+    input.id = FIELD_VALUES.id;
+    input.type = FIELD_VALUES.type;
+    input.placeholder = FIELD_VALUES.placeholder;
     field.appendChild(input);
     
-    Spy(input, values);
+    Spy(input, FIELD_VALUES, state, formState);
     return field;
 }
 
 
 // Render email
-function renderEmail(values) {
+function renderEmail(FIELD_VALUES, LABEL, state) {
     field = document.createElement('div');
     
 
-    if (values.labelOnTop) {
+    if (LABEL) {
         var label = document.createElement("label");
-        label.innerText = values.label;
+        label.innerText = FIELD_VALUES.label;
         
         var emailDIV = document.createElement('div');
         field.appendChild(label);
@@ -82,7 +94,7 @@ function renderEmail(values) {
     }
     else {
         var label = document.createElement("label");
-        label.innerText = values.label;
+        label.innerText = FIELD_VALUES.label;
         
         
         var emailDIV = document.createElement('div');
@@ -94,30 +106,27 @@ function renderEmail(values) {
     
     let user = document.createElement('input');
     user.type = "text"
-    user.placeholder = values.placeholder;
-    user.id = values.id + "-user";
+    user.placeholder = FIELD_VALUES.placeholder;
+    user.id = FIELD_VALUES.id + "-user";
     
     let at = document.createElement('span');
     at.id = "at";
     at.innerHTML = "@";
-    at.id = values.id + "-at";
+    at.id = FIELD_VALUES.id + "-at";
     
     let domain = document.createElement('input');
     domain.type = "text";
     domain.placeholder = "domain.com";
-    domain.id = values.id + "-domain";
-    
-    
-    console.log("render... " + values.type)
+    domain.id = FIELD_VALUES.id + "-domain";
     
     user.addEventListener('input', () => {
-        values.state[values.id] = user.value + at.innerHTML + domain.value;
-        console.log(values.state);
+        FIELD_VALUES.state[FIELD_VALUES.id] = user.value + at.innerHTML + domain.value;
+        state.innerText = FIELD_VALUES.state;
     })
     
     domain.addEventListener('input', () => {
-        values.state[values.id] = user.value + at.innerHTML + domain.value;
-        console.log(values.state);
+        FIELD_VALUES.state[FIELD_VALUES.id] = user.value + at.innerHTML + domain.value;
+        state.innerText = FIELD_VALUES.state;
     })
     
     
@@ -131,18 +140,20 @@ function renderEmail(values) {
 
 
 // Render empty div
-function renderDefault(values) {
+function renderDefault(FIELD_VALUES) {
     field = document.createElement('div');
-    field.id = values.id;
-
-    console.log("render default")
+    field.id = FIELD_VALUES.id;
 
     return field;
 }
 
-function Spy(field, config) {
+function Spy(field, config, state, formState) {
     field.addEventListener('input', () => {
-        config.state[config.id] = field.value;
-        console.log(field.value);
+    // console.log("test")
+        if (state) {
+            formState[config.id] = field.value;
+            state.innerText = JSON.stringify(formState);
+            console.log(formState)
+        }
     })
 }
