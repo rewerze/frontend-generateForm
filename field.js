@@ -1,26 +1,57 @@
 var formField;
 var stateView;
+var formState = {};
 
 export function renderForm (CONFIG) {
-    let formState = {};
     formField = document.createElement('form');
-    stateView = document.createElement('p');
-    formField.appendChild(stateView);
+
+    if(CONFIG.showState) {
+        stateView = document.createElement('p');
+        formField.appendChild(stateView);
+    }
     for (let i = 0; i < CONFIG.fields.length; i++ ) {
 
         console.log("rendering " + (i+1) + ". field: " + CONFIG.fields[i].type)
         formField.appendChild(renderField(CONFIG.fields[i], CONFIG.labelOnTop, stateView, formState));
     }
+
+
+    // Gomboknak div
+    let buttonDiv = document.createElement("div");
+    buttonDiv.className = "controls"
+
+    // Save button
+    if(CONFIG.controls.onSave) {
+        var saveButton = document.createElement("button");
+        saveButton.innerText= "Save";
+        saveButton.type = "button";
+        saveButton.onclick = () => {CONFIG.controls.onSave(formState)};
+        
+        buttonDiv.appendChild(saveButton);
+    }
+    
+    // Clear button
+    if(CONFIG.controls.onClear) {
+        var clearButton = document.createElement("button");
+        clearButton.innerText= "Clear";
+        clearButton.type = "button";
+        clearButton.onclick = () => {CONFIG.controls.onClear(formField.getElementsByTagName("input"), formState, stateView)};
+        
+        buttonDiv.appendChild(clearButton);
+    }
+    formField.appendChild(buttonDiv);
+
     return formField;
 }
+
 
 var field;
 function renderField(FIELD_PROPERTIES, LABEL, state, formState) {
     switch (FIELD_PROPERTIES.type) {
-        case "text":    field = renderText(FIELD_PROPERTIES, LABEL, state, formState);     break;
-        case "number":  field = renderNumber(FIELD_PROPERTIES, LABEL, state, formState);   break;
-        case "email":   field = renderEmail(FIELD_PROPERTIES, LABEL, state, formState);    break;
-        default:        field = renderDefault(FIELD_PROPERTIES, LABEL, state, formState);  break;
+        case "text":    field = renderText      (FIELD_PROPERTIES, LABEL, state, formState);  break;
+        case "number":  field = renderNumber    (FIELD_PROPERTIES, LABEL, state, formState);  break;
+        case "email":   field = renderEmail     (FIELD_PROPERTIES, LABEL, state, formState);  break;
+        default:        field = renderDefault   (FIELD_PROPERTIES, LABEL, state, formState);  break;
     }
     return field;
 }
@@ -79,7 +110,7 @@ function renderNumber(FIELD_VALUES, LABEL, state, formState) {
 
 
 // Render email
-function renderEmail(FIELD_VALUES, LABEL, state) {
+function renderEmail(FIELD_VALUES, LABEL, state, formState) {
     field = document.createElement('div');
     
 
@@ -120,13 +151,13 @@ function renderEmail(FIELD_VALUES, LABEL, state) {
     domain.id = FIELD_VALUES.id + "-domain";
     
     user.addEventListener('input', () => {
-        FIELD_VALUES.state[FIELD_VALUES.id] = user.value + at.innerHTML + domain.value;
-        state.innerText = FIELD_VALUES.state;
+        formState[FIELD_VALUES.id] = user.value + at.innerHTML + domain.value;
+        state.innerText = JSON.stringify(formState);
     })
     
     domain.addEventListener('input', () => {
-        FIELD_VALUES.state[FIELD_VALUES.id] = user.value + at.innerHTML + domain.value;
-        state.innerText = FIELD_VALUES.state;
+        formState[FIELD_VALUES.id] = user.value + at.innerHTML + domain.value;
+        state.innerText = JSON.stringify(formState);
     })
     
     
@@ -153,7 +184,6 @@ function Spy(field, config, state, formState) {
         if (state) {
             formState[config.id] = field.value;
             state.innerText = JSON.stringify(formState);
-            console.log(formState)
         }
     })
 }
